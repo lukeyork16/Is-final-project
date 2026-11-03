@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7ec8f2"/><stop offset="1" stop-color="#d9f0fc"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="260" rx="16" fill="url(#sky)"/>
+  <circle cx="330" cy="55" r="26" fill="#ffd54f"/>
+  <polygon points="0,260 0,170 70,110 130,150 200,60 280,140 330,100 400,150 400,260" fill="#6d6f5a"/>
+  <polygon points="200,60 175,92 190,88 200,100 212,86 225,92" fill="#ffffff"/>
+  <polygon points="214,128 222,128 232,112 240,112 228,132 228,146 220,146 220,132 208,112 216,112" fill="#ffffff"/>
+  <rect x="0" y="215" width="400" height="45" fill="#3b7d3b"/>
+  <text x="20" y="245" font-family="Georgia, serif" font-size="18" fill="#ffffff">Provo, Utah</text>
+</svg>
