@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cougar Buckets | Basketball Shooting Game</title>
+<title>Basketball Shooting Game</title>
 <style>
 body{margin:0;background:#0b1e33;color:#fff;font-family:"Trebuchet MS",Arial,sans-serif;text-align:center;}
 h1{margin:18px 0 4px;font-family:Georgia,serif;letter-spacing:2px;}
@@ -25,8 +25,8 @@ button:hover{background:#ff9233;}
 </style>
 </head>
 <body>
-<h1>COUGAR BUCKETS</h1>
-<p class="sub">Drag back from anywhere and let it fly. 60 seconds on the clock.</p>
+<h1>Basketball Shooting Game</h1>
+<p class="sub">Click and drag back to aim, then let go to shoot. You have 60 seconds.</p>
 <div class="board">
   <div class="stat"><span>Score</span><b id="score">0</b></div>
   <div class="stat"><span>Time</span><b id="time">60</b></div>
@@ -36,8 +36,8 @@ button:hover{background:#ff9233;}
 <div class="wrap">
   <canvas id="game" width="900" height="520"></canvas>
   <div class="overlay" id="menu">
-    <h2 id="mtitle">Cougar Buckets</h2>
-    <p id="mtext">Click and drag backward like a slingshot to aim, then let go to shoot. Shots behind the line are worth 3. Hit 3 in a row and you're ON FIRE for double points. Swishes get a bonus point.</p>
+    <h2 id="mtitle">Basketball Shooting Game</h2>
+    <p id="mtext">Drag backward to aim and let go to shoot. Shots behind the line are worth 3 points. A swish adds 1 bonus point, and after 3 makes in a row your points are doubled until you miss.</p>
     <button id="startbtn">Start Game</button>
   </div>
 </div>
@@ -79,7 +79,7 @@ function endGame(){
   if(score>best){best=score;try{localStorage.setItem('cbBest',best)}catch(e){}}
   updateBoard();
   document.getElementById('mtitle').textContent='Final Score: '+score;
-  document.getElementById('mtext').textContent=score>=best&&score>0?'New personal best! Rise and shout.':'Best so far: '+best+'. Run it back?';
+  document.getElementById('mtext').textContent=score>=best&&score>0?'New high score.':'High score: '+best;
   document.getElementById('startbtn').textContent='Play Again';
   document.getElementById('menu').classList.remove('hide');
 }
@@ -116,8 +116,8 @@ function made(){
   if(!ball.rimHit)pts+=1; //swish bonus
   if(fire)pts*=2;
   score+=pts;streak++;netSway=1;
-  let txt=!ball.rimHit?'SWISH!':['Bucket!','Money!','Cash!','Good!'][Math.floor(Math.random()*4)];
-  if(streak===3)txt='ON FIRE!';
+  let txt=!ball.rimHit?'Swish':'Good';
+  if(streak===3)txt='Streak x2';
   msgs.push({t:txt+' +'+pts,x:765,y:rimY-40,life:60});
   for(let i=0;i<25;i++)parts.push({x:765,y:rimY,vx:(Math.random()-.5)*6,vy:-Math.random()*5,life:50,c:fire?'#ff7b00':['#ffffff','#0062b8','#7fb6ea'][i%3]});
   updateBoard();
@@ -133,7 +133,7 @@ function step(){
   if(!ball.done&&py<rimY&&ball.y>=rimY&&ball.x>rimL+4&&ball.x<rimR-4&&ball.vy>0){ball.done=true;made()}
   if(ball.y+r>floorY){ball.y=floorY-r;ball.vy*=-0.5;ball.vx*=0.85} //floor bounce
   if(ball.x>W+40||ball.x<-40||ball.age>260){
-    if(!ball.done){streak=0;msgs.push({t:'Brick',x:spotX,y:floorY-110,life:45});updateBoard()}
+    if(!ball.done){streak=0;msgs.push({t:'Miss',x:spotX,y:floorY-110,life:45});updateBoard()}
     newSpot();
   }
 }
@@ -205,9 +205,9 @@ function drawFx(){
   ctx.globalAlpha=1;
   msgs=msgs.filter(m=>m.life>0);
   ctx.textAlign='center';ctx.font='bold 28px Georgia';
-  for(const m of msgs){m.y-=0.8;m.life--;ctx.globalAlpha=Math.min(1,m.life/30);ctx.fillStyle=m.t.startsWith('Brick')?'#ff8a8a':'#ffe066';ctx.fillText(m.t,m.x,m.y)}
+  for(const m of msgs){m.y-=0.8;m.life--;ctx.globalAlpha=Math.min(1,m.life/30);ctx.fillStyle=m.t.startsWith('Miss')?'#ff8a8a':'#ffe066';ctx.fillText(m.t,m.x,m.y)}
   ctx.globalAlpha=1;ctx.textAlign='left';
-  if(streak>=3){ctx.fillStyle='#ff7b00';ctx.font='bold 18px Arial';ctx.fillText('ON FIRE x2',W-130,30)}
+  if(streak>=3){ctx.fillStyle='#ff7b00';ctx.font='bold 18px Arial';ctx.fillText('STREAK x2',W-130,30)}
 }
 
 //main loop
